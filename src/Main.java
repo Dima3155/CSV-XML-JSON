@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        File file = new File("basket.txt");
+        File file = new File("basket.bin");
         Scanner scanner = new Scanner(System.in);
         Basket basket = new Basket(new String[]{"Хлеб", "Яблоки", "Молоко"}, new int[]{50, 15, 70});
         if (file.exists()) {
-            basket = Basket.loadFromTxtFile(file);
+            basket = Basket.loadFromBinFile(file);
         }
         System.out.println("Список возможных товаров для покупки");
         basket.printProducts();
@@ -24,6 +24,6 @@ public class Main {
         }
         System.out.println("Ваша корзина:");
         basket.printCart();
-        basket.saveTxt(file);
+        basket.saveBin(file);
     }
 }
