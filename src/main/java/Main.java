@@ -1,16 +1,13 @@
-import java.io.File;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        File file = new File("basket.bin");
         Scanner scanner = new Scanner(System.in);
-        Basket basket = new Basket(new String[]{"Хлеб", "Яблоки", "Молоко"}, new int[]{50, 15, 70});
-        if (file.exists()) {
-            basket = Basket.loadFromBinFile(file);
-        }
+        Basket basket;
+        basket = Shop.load();
         System.out.println("Список возможных товаров для покупки");
         basket.printProducts();
+        ClientLog person1 = new ClientLog();
         while (true) {
             System.out.println("Введите товар и количество или введите 'end'");
             String input = scanner.nextLine();
@@ -21,9 +18,11 @@ public class Main {
             int productNumber = Integer.parseInt(parts[0]) - 1;
             int productCount = Integer.parseInt(parts[1]);
             basket.addToCard(productNumber, productCount);
+            person1.log(productNumber, productCount);
         }
         System.out.println("Ваша корзина:");
         basket.printCart();
-        basket.saveBin(file);
+        Shop.save(basket);
+        Shop.log(person1);
     }
 }
